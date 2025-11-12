@@ -676,7 +676,7 @@ The token name is over the maximum length
         <a href="../../aptos-framework/doc/aggregator_v2.md#0x1_aggregator_v2_create_snapshot">aggregator_v2::create_snapshot</a>&lt;u64&gt;(0)
     );
 
-    // If create_numbered_token called us, add index <b>to</b> the name.
+    // If create_numbered_token called us, <a href="../../aptos-framework/doc/add.md#0x1_add">add</a> index <b>to</b> the name.
     <b>let</b> name = <b>if</b> (name_with_index_suffix.is_some()) {
         <a href="../../aptos-framework/doc/aggregator_v2.md#0x1_aggregator_v2_derive_string_concat">aggregator_v2::derive_string_concat</a>(name_prefix, &index, name_with_index_suffix.extract())
     } <b>else</b> {

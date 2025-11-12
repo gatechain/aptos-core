@@ -478,7 +478,7 @@ Mint a token into an existing collection, and retrieve the object / address of t
 
     <b>let</b> <a href="collection.md#0x4_collection">collection</a> = <a href="aptos_token.md#0x4_aptos_token_collection_object">collection_object</a>(creator, &<a href="collection.md#0x4_collection">collection</a>);
 
-    // If tokens are freezable, add a transfer ref <b>to</b> be able <b>to</b> <b>freeze</b> transfers
+    // If tokens are freezable, <a href="../../aptos-framework/doc/add.md#0x1_add">add</a> a transfer ref <b>to</b> be able <b>to</b> <b>freeze</b> transfers
     <b>let</b> freezable_by_creator = <a href="aptos_token.md#0x4_aptos_token_are_collection_tokens_freezable">are_collection_tokens_freezable</a>(<a href="collection.md#0x4_collection">collection</a>);
     <b>if</b> (freezable_by_creator) {
         <b>let</b> aptos_token_addr = <a href="../../aptos-framework/doc/object.md#0x1_object_address_from_constructor_ref">object::address_from_constructor_ref</a>(&constructor_ref);

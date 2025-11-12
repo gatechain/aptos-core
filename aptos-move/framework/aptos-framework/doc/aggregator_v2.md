@@ -321,7 +321,7 @@ EAGGREGATOR_ELEMENT_TYPE_NOT_SUPPORTED raised if called with a different type.
 
 <pre><code><b>public</b> <b>fun</b> <a href="aggregator_v2.md#0x1_aggregator_v2_create_aggregator_with_value">create_aggregator_with_value</a>&lt;IntElement: <b>copy</b> + drop&gt;(start_value: IntElement, max_value: IntElement): <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">Aggregator</a>&lt;IntElement&gt; {
     <b>let</b> <a href="aggregator.md#0x1_aggregator">aggregator</a> = <a href="aggregator_v2.md#0x1_aggregator_v2_create_aggregator">create_aggregator</a>(max_value);
-    <a href="aggregator.md#0x1_aggregator">aggregator</a>.<a href="aggregator_v2.md#0x1_aggregator_v2_add">add</a>(start_value);
+    <a href="aggregator.md#0x1_aggregator">aggregator</a>.<a href="add.md#0x1_add">add</a>(start_value);
     <a href="aggregator.md#0x1_aggregator">aggregator</a>
 }
 </code></pre>
@@ -374,7 +374,7 @@ EAGGREGATOR_ELEMENT_TYPE_NOT_SUPPORTED raised if called with a different type.
 
 <pre><code><b>public</b> <b>fun</b> <a href="aggregator_v2.md#0x1_aggregator_v2_create_unbounded_aggregator_with_value">create_unbounded_aggregator_with_value</a>&lt;IntElement: <b>copy</b> + drop&gt;(start_value: IntElement): <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">Aggregator</a>&lt;IntElement&gt; {
     <b>let</b> <a href="aggregator.md#0x1_aggregator">aggregator</a> = <a href="aggregator_v2.md#0x1_aggregator_v2_create_unbounded_aggregator">create_unbounded_aggregator</a>();
-    <a href="aggregator.md#0x1_aggregator">aggregator</a>.<a href="aggregator_v2.md#0x1_aggregator_v2_add">add</a>(start_value);
+    <a href="aggregator.md#0x1_aggregator">aggregator</a>.<a href="add.md#0x1_add">add</a>(start_value);
     <a href="aggregator.md#0x1_aggregator">aggregator</a>
 }
 </code></pre>
@@ -419,7 +419,7 @@ If addition would exceed the max_value, EAGGREGATOR_OVERFLOW exception will be t
 Parallelism info: This operation enables speculative parallelism.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="aggregator_v2.md#0x1_aggregator_v2_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">aggregator_v2::Aggregator</a>&lt;IntElement&gt;, value: IntElement)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">aggregator_v2::Aggregator</a>&lt;IntElement&gt;, value: IntElement)
 </code></pre>
 
 
@@ -428,7 +428,7 @@ Parallelism info: This operation enables speculative parallelism.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="aggregator_v2.md#0x1_aggregator_v2_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">Aggregator</a>&lt;IntElement&gt;, value: IntElement) {
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">Aggregator</a>&lt;IntElement&gt;, value: IntElement) {
     <b>assert</b>!(self.<a href="aggregator_v2.md#0x1_aggregator_v2_try_add">try_add</a>(value), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_out_of_range">error::out_of_range</a>(<a href="aggregator_v2.md#0x1_aggregator_v2_EAGGREGATOR_OVERFLOW">EAGGREGATOR_OVERFLOW</a>));
 }
 </code></pre>
@@ -888,7 +888,7 @@ DEPRECATED, use derive_string_concat() instead. always raises EAGGREGATOR_FUNCTI
 ### Function `add`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="aggregator_v2.md#0x1_aggregator_v2_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">aggregator_v2::Aggregator</a>&lt;IntElement&gt;, value: IntElement)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;IntElement&gt;(self: &<b>mut</b> <a href="aggregator_v2.md#0x1_aggregator_v2_Aggregator">aggregator_v2::Aggregator</a>&lt;IntElement&gt;, value: IntElement)
 </code></pre>
 
 

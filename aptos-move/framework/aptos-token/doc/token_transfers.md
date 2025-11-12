@@ -647,7 +647,7 @@ Token offer doesn't exist
     <b>let</b> token_offer_id = <a href="token_transfers.md#0x3_token_transfers_create_token_offer_id">create_token_offer_id</a>(receiver, token_id);
     <b>let</b> <a href="token.md#0x3_token">token</a> = <a href="token.md#0x3_token_withdraw_token">token::withdraw_token</a>(sender, token_id, amount);
     <b>if</b> (!pending_claims.contains(token_offer_id)) {
-        pending_claims.add(token_offer_id, <a href="token.md#0x3_token">token</a>);
+        pending_claims.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(token_offer_id, <a href="token.md#0x3_token">token</a>);
     } <b>else</b> {
         <b>let</b> dst_token = pending_claims.borrow_mut(token_offer_id);
         <a href="token.md#0x3_token_merge">token::merge</a>(dst_token, <a href="token.md#0x3_token">token</a>);

@@ -330,7 +330,7 @@
     for (i in 0..count) {
         <b>if</b> (nonce_history.next_key &lt;= <a href="nonce_validation.md#0x1_nonce_validation_NUM_BUCKETS">NUM_BUCKETS</a>) {
             <b>if</b> (!nonce_history.nonce_table.contains(nonce_history.next_key)) {
-                nonce_history.nonce_table.add(
+                nonce_history.nonce_table.<a href="add.md#0x1_add">add</a>(
                     nonce_history.next_key,
                     <a href="nonce_validation.md#0x1_nonce_validation_empty_bucket">empty_bucket</a>(<b>true</b>)
                 );
@@ -376,7 +376,7 @@
     <b>let</b> bucket_index = sip_hash_from_value(&nonce_key) % <a href="nonce_validation.md#0x1_nonce_validation_NUM_BUCKETS">NUM_BUCKETS</a>;
     <b>let</b> current_time = <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>();
     <b>if</b> (!nonce_history.nonce_table.contains(bucket_index)) {
-        nonce_history.nonce_table.add(
+        nonce_history.nonce_table.<a href="add.md#0x1_add">add</a>(
             bucket_index,
             <a href="nonce_validation.md#0x1_nonce_validation_empty_bucket">empty_bucket</a>(<b>false</b>)
         );
@@ -432,8 +432,8 @@
         sender_address,
         nonce,
     };
-    bucket.nonces_ordered_by_exp_time.add(nonce_key_with_exp_time, <b>true</b>);
-    bucket.nonce_to_exp_time_map.add(nonce_key, txn_expiration_time);
+    bucket.nonces_ordered_by_exp_time.<a href="add.md#0x1_add">add</a>(nonce_key_with_exp_time, <b>true</b>);
+    bucket.nonce_to_exp_time_map.<a href="add.md#0x1_add">add</a>(nonce_key, txn_expiration_time);
     <b>true</b>
 }
 </code></pre>

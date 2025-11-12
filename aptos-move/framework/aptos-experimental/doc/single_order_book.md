@@ -812,7 +812,7 @@ else it is added to the active order book. The API aborts if it's not a maker or
         <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="single_order_book.md#0x7_single_order_book_EORDER_ALREADY_EXISTS">EORDER_ALREADY_EXISTS</a>)
     );
     <b>if</b> (order_req.client_order_id.is_some()) {
-        self.client_order_ids.add(
+        self.client_order_ids.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             new_account_client_order_id(
                 order_req.<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order_req.client_order_id.destroy_some()
             ),
@@ -919,10 +919,10 @@ it is added to the order book, if it exists, its size is updated.
             order_req.metadata
         );
 
-    self.orders.add(order_id, new_order_with_state(order, <b>false</b>));
+    self.orders.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(order_id, new_order_with_state(order, <b>false</b>));
 
     <b>if</b> (order_req.client_order_id.is_some()) {
-        self.client_order_ids.add(
+        self.client_order_ids.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             new_account_client_order_id(
                 order_req.<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order_req.client_order_id.destroy_some()
             ),

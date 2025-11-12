@@ -245,7 +245,7 @@
     <b>let</b> (price_move_down_index, price_move_up_index, time_based_index) =
         trigger_condition.index();
     <b>if</b> (price_move_up_index.is_some()) {
-        self.price_move_up_index.add(
+        self.price_move_up_index.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             <a href="pending_order_book_index.md#0x7_pending_order_book_index_PendingOrderKey">PendingOrderKey</a> {
                 price: price_move_up_index.destroy_some(),
                 tie_breaker: unique_priority_idx
@@ -253,7 +253,7 @@
             order_id
         );
     } <b>else</b> <b>if</b> (price_move_down_index.is_some()) {
-        self.price_move_down_index.add(
+        self.price_move_down_index.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             <a href="pending_order_book_index.md#0x7_pending_order_book_index_PendingOrderKey">PendingOrderKey</a> {
                 price: price_move_down_index.destroy_some(),
                 // Use a descending tie breaker <b>to</b> ensure that for price <b>move</b> down orders,
@@ -263,7 +263,7 @@
             order_id
         );
     } <b>else</b> <b>if</b> (time_based_index.is_some()) {
-        self.time_based_index.add(
+        self.time_based_index.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             <a href="pending_order_book_index.md#0x7_pending_order_book_index_PendingTimeKey">PendingTimeKey</a> {
                 time: time_based_index.destroy_some(),
                 tie_breaker: unique_priority_idx

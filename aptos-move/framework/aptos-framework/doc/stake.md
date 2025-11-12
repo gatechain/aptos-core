@@ -2704,7 +2704,7 @@ Allow on chain governance to remove validators from the validator set.
     <b>while</b> (i &lt; num_validators_to_distribute) {
         <b>let</b> validator_index = fee_distribution_validator_indices[i];
         <b>let</b> fee_octa = fee_amounts_octa[i];
-        pending_fee.pending_fee_by_validator.borrow_mut(&validator_index).add(fee_octa);
+        pending_fee.pending_fee_by_validator.borrow_mut(&validator_index).<a href="add.md#0x1_add">add</a>(fee_octa);
         i = i + 1;
     }
 }
@@ -4089,7 +4089,7 @@ power.
     <b>if</b> (<b>exists</b>&lt;<a href="stake.md#0x1_stake_PendingTransactionFee">PendingTransactionFee</a>&gt;(@aptos_framework)) {
         <b>let</b> pending_fee_by_validator = &<b>mut</b> <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_PendingTransactionFee">PendingTransactionFee</a>&gt;(@aptos_framework).pending_fee_by_validator;
         <b>assert</b>!(pending_fee_by_validator.is_empty(), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_internal">error::internal</a>(<a href="stake.md#0x1_stake_ETRANSACTION_FEE_NOT_FULLY_DISTRIBUTED">ETRANSACTION_FEE_NOT_FULLY_DISTRIBUTED</a>));
-        validator_set.active_validators.for_each_ref(|v| pending_fee_by_validator.add(v.config.validator_index, <a href="aggregator_v2.md#0x1_aggregator_v2_create_unbounded_aggregator">aggregator_v2::create_unbounded_aggregator</a>&lt;u64&gt;()));
+        validator_set.active_validators.for_each_ref(|v| pending_fee_by_validator.<a href="add.md#0x1_add">add</a>(v.config.validator_index, <a href="aggregator_v2.md#0x1_aggregator_v2_create_unbounded_aggregator">aggregator_v2::create_unbounded_aggregator</a>&lt;u64&gt;()));
     };
 
     <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features_periodical_reward_rate_decrease_enabled">features::periodical_reward_rate_decrease_enabled</a>()) {

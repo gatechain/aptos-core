@@ -255,7 +255,7 @@ The maximal number of property that can be stored in property map
     for (i in 0..length) {
         <b>let</b> key = keys[i];
         <b>assert</b>!(key.<a href="property_map.md#0x3_property_map_length">length</a>() &lt;= <a href="property_map.md#0x3_property_map_MAX_PROPERTY_NAME_LENGTH">MAX_PROPERTY_NAME_LENGTH</a>, <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="property_map.md#0x3_property_map_EPROPERTY_MAP_NAME_TOO_LONG">EPROPERTY_MAP_NAME_TOO_LONG</a>));
-        properties.map.<a href="property_map.md#0x3_property_map_add">add</a>(
+        properties.map.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
             key,
             <a href="property_map.md#0x3_property_map_PropertyValue">PropertyValue</a> { value: values[i], type: types[i] }
         );
@@ -298,7 +298,7 @@ Create property map directly from key and property value
         <b>let</b> key = keys[i];
         <b>let</b> val = values[i];
         <b>assert</b>!(key.<a href="property_map.md#0x3_property_map_length">length</a>() &lt;= <a href="property_map.md#0x3_property_map_MAX_PROPERTY_NAME_LENGTH">MAX_PROPERTY_NAME_LENGTH</a>, <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="property_map.md#0x3_property_map_EPROPERTY_MAP_NAME_TOO_LONG">EPROPERTY_MAP_NAME_TOO_LONG</a>));
-        properties.<a href="property_map.md#0x3_property_map_add">add</a>(key, val);
+        properties.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, val);
     };
     properties
 }
@@ -364,7 +364,7 @@ Create property map directly from key and property value
 
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="property_map.md#0x3_property_map_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">property_map::PropertyMap</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="property_map.md#0x3_property_map_PropertyValue">property_map::PropertyValue</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">property_map::PropertyMap</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="property_map.md#0x3_property_map_PropertyValue">property_map::PropertyValue</a>)
 </code></pre>
 
 
@@ -373,10 +373,10 @@ Create property map directly from key and property value
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="property_map.md#0x3_property_map_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">PropertyMap</a>, key: String, value: <a href="property_map.md#0x3_property_map_PropertyValue">PropertyValue</a>) {
+<pre><code><b>public</b> <b>fun</b> <a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">PropertyMap</a>, key: String, value: <a href="property_map.md#0x3_property_map_PropertyValue">PropertyValue</a>) {
     <b>assert</b>!(key.<a href="property_map.md#0x3_property_map_length">length</a>() &lt;= <a href="property_map.md#0x3_property_map_MAX_PROPERTY_NAME_LENGTH">MAX_PROPERTY_NAME_LENGTH</a>, <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="property_map.md#0x3_property_map_EPROPERTY_MAP_NAME_TOO_LONG">EPROPERTY_MAP_NAME_TOO_LONG</a>));
     <b>assert</b>!(self.map.<a href="property_map.md#0x3_property_map_length">length</a>() &lt; <a href="property_map.md#0x3_property_map_MAX_PROPERTY_MAP_SIZE">MAX_PROPERTY_MAP_SIZE</a>, <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_state">error::invalid_state</a>(<a href="property_map.md#0x3_property_map_EPROPERTY_NUMBER_EXCEED_LIMIT">EPROPERTY_NUMBER_EXCEED_LIMIT</a>));
-    self.map.<a href="property_map.md#0x3_property_map_add">add</a>(key, value);
+    self.map.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, value);
 }
 </code></pre>
 
@@ -784,7 +784,7 @@ Allow updating existing keys' value and add new key-value pairs
         <b>if</b> (self.<a href="property_map.md#0x3_property_map_contains_key">contains_key</a>(key)) {
             self.<a href="property_map.md#0x3_property_map_update_property_value">update_property_value</a>(key, prop_val);
         } <b>else</b> {
-            self.<a href="property_map.md#0x3_property_map_add">add</a>(*key, prop_val);
+            self.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(*key, prop_val);
         };
     }
 }
@@ -980,7 +980,7 @@ create a property value from generic type data
 ### Function `add`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="property_map.md#0x3_property_map_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">property_map::PropertyMap</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="property_map.md#0x3_property_map_PropertyValue">property_map::PropertyValue</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(self: &<b>mut</b> <a href="property_map.md#0x3_property_map_PropertyMap">property_map::PropertyMap</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="property_map.md#0x3_property_map_PropertyValue">property_map::PropertyValue</a>)
 </code></pre>
 
 

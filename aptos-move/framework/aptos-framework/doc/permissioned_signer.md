@@ -1147,7 +1147,7 @@ signer.
     <b>if</b> (<a href="big_ordered_map.md#0x1_big_ordered_map_contains">big_ordered_map::contains</a>(perms, &key)) {
         <b>let</b> value = perms.remove(&key);
         <b>let</b> return_ = mutate(&<b>mut</b> value);
-        perms.add(key, value);
+        perms.<a href="add.md#0x1_add">add</a>(key, value);
         return_
     } <b>else</b> {
         default
@@ -1191,9 +1191,9 @@ signer.
     <b>if</b> (perms.contains(&key)) {
         <b>let</b> value = perms.remove(&key);
         mutate(&<b>mut</b> value);
-        perms.add(key, value);
+        perms.<a href="add.md#0x1_add">add</a>(key, value);
     } <b>else</b> {
-        perms.add(key, default);
+        perms.<a href="add.md#0x1_add">add</a>(key, default);
     }
 }
 </code></pre>

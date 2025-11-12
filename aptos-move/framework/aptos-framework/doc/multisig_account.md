@@ -2031,7 +2031,7 @@ create_with_existing_account_and_revoke_auth_key instead.
         proof_challenge,
     );
 
-    // We create the <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a> for the multisig <a href="account.md#0x1_account">account</a> here since this is required <b>to</b> add the <a href="multisig_account.md#0x1_multisig_account_MultisigAccount">MultisigAccount</a> resource
+    // We create the <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a> for the multisig <a href="account.md#0x1_account">account</a> here since this is required <b>to</b> <a href="add.md#0x1_add">add</a> the <a href="multisig_account.md#0x1_multisig_account_MultisigAccount">MultisigAccount</a> resource
     // This should be safe and authorized because we have verified the signed message from the existing <a href="account.md#0x1_account">account</a>
     // that authorizes creating a multisig <a href="account.md#0x1_account">account</a> <b>with</b> the specified owners and signature threshold.
     <b>let</b> <a href="multisig_account.md#0x1_multisig_account">multisig_account</a> = &<a href="create_signer.md#0x1_create_signer">create_signer</a>(multisig_address);
@@ -2152,7 +2152,7 @@ account.
         proof_challenge,
     );
 
-    // We create the <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a> for the multisig <a href="account.md#0x1_account">account</a> here since this is required <b>to</b> add the <a href="multisig_account.md#0x1_multisig_account_MultisigAccount">MultisigAccount</a> resource
+    // We create the <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a> for the multisig <a href="account.md#0x1_account">account</a> here since this is required <b>to</b> <a href="add.md#0x1_add">add</a> the <a href="multisig_account.md#0x1_multisig_account_MultisigAccount">MultisigAccount</a> resource
     // This should be safe and authorized because we have verified the signed message from the existing <a href="account.md#0x1_account">account</a>
     // that authorizes creating a multisig <a href="account.md#0x1_account">account</a> <b>with</b> the specified owners and signature threshold.
     <b>let</b> <a href="multisig_account.md#0x1_multisig_account">multisig_account</a> = &<a href="create_signer.md#0x1_create_signer">create_signer</a>(multisig_address);
@@ -3805,7 +3805,7 @@ Add new owners, remove owners to remove, update signatures required.
             <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="multisig_account.md#0x1_multisig_account_EOWNERS_TO_REMOVE_NEW_OWNERS_OVERLAP">EOWNERS_TO_REMOVE_NEW_OWNERS_OVERLAP</a>)
         )
     });
-    // If new owners provided, try <b>to</b> add them and emit an <a href="event.md#0x1_event">event</a>.
+    // If new owners provided, try <b>to</b> <a href="add.md#0x1_add">add</a> them and emit an <a href="event.md#0x1_event">event</a>.
     <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&new_owners) &gt; 0) {
         <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_append">vector::append</a>(&<b>mut</b> multisig_account_ref_mut.owners, new_owners);
         <a href="multisig_account.md#0x1_multisig_account_validate_owners">validate_owners</a>(

@@ -402,7 +402,7 @@ A <code>SingleBulkOrderMatch</code> containing the match details.
             !is_bid,
         );
     };
-    self.orders.add(order_address, order);
+    self.orders.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(order_address, order);
     <b>return</b> order_match
 }
 </code></pre>
@@ -631,7 +631,7 @@ effectively allowing them to "reuse" matched liquidity.
     <a href="bulk_order_book.md#0x7_bulk_order_book_cancel_active_orders">cancel_active_orders</a>(price_time_idx, &order);
     order.<a href="bulk_order_book.md#0x7_bulk_order_book_reinsert_order">reinsert_order</a>(&reinsert_order);
     <a href="bulk_order_book.md#0x7_bulk_order_book_activate_first_price_levels">activate_first_price_levels</a>(price_time_idx, &order, reinsert_order.get_order_id_from_match_details());
-    self.orders.add(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order);
+    self.orders.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order);
 }
 </code></pre>
 
@@ -688,7 +688,7 @@ with the same order ID in the future.
     <b>let</b> order_copy = order;
     <a href="bulk_order_book.md#0x7_bulk_order_book_cancel_active_orders">cancel_active_orders</a>(price_time_idx, &order);
     order.set_empty();
-    self.orders.add(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order);
+    self.orders.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, order);
     order_copy
 }
 </code></pre>
@@ -869,7 +869,7 @@ The first price levels of both bid and ask sides will be activated in the active
         (old_order.get_order_id(), std::option::some(existing_sequence_number))
     } <b>else</b> {
         <b>let</b> order_id = new_order_id_type(<a href="../../aptos-framework/doc/transaction_context.md#0x1_transaction_context_monotonically_increasing_counter">transaction_context::monotonically_increasing_counter</a>());
-        self.order_id_to_address.add(order_id, <a href="../../aptos-framework/doc/account.md#0x1_account">account</a>);
+        self.order_id_to_address.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(order_id, <a href="../../aptos-framework/doc/account.md#0x1_account">account</a>);
         (order_id, std::option::none())
     };
     <b>let</b> (bulk_order, cancelled_bid_prices, cancelled_bid_sizes, cancelled_ask_prices, cancelled_ask_sizes) = new_bulk_order(
@@ -879,7 +879,7 @@ The first price levels of both bid and ask sides will be activated in the active
         price_time_idx.best_bid_price(),
         price_time_idx.best_ask_price(),
     );
-    self.orders.add(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, bulk_order);
+    self.orders.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(<a href="../../aptos-framework/doc/account.md#0x1_account">account</a>, bulk_order);
     // Activate the first price levels in the active order book
     <a href="bulk_order_book.md#0x7_bulk_order_book_activate_first_price_levels">activate_first_price_levels</a>(price_time_idx, &bulk_order, order_id);
     new_bulk_order_place_response(

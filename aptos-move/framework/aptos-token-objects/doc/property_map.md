@@ -460,7 +460,7 @@ Helper for external entry functions to produce a valid container for property va
         <b>let</b> new_type = <a href="property_map.md#0x4_property_map_to_internal_type">to_internal_type</a>(type);
         <a href="property_map.md#0x4_property_map_validate_type">validate_type</a>(new_type, value);
 
-        container.<a href="property_map.md#0x4_property_map_add">add</a>(key, <a href="property_map.md#0x4_property_map_PropertyValue">PropertyValue</a> { value, type: new_type });
+        container.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, <a href="property_map.md#0x4_property_map_PropertyValue">PropertyValue</a> { value, type: new_type });
     };
 
     <a href="property_map.md#0x4_property_map_PropertyMap">PropertyMap</a> { inner: container }
@@ -1059,7 +1059,7 @@ Read a type and verify that the type is correct
 Add a property, already bcs encoded as a <code><a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;</code>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="property_map.md#0x4_property_map_add">add</a>(ref: &<a href="property_map.md#0x4_property_map_MutatorRef">property_map::MutatorRef</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, type: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(ref: &<a href="property_map.md#0x4_property_map_MutatorRef">property_map::MutatorRef</a>, key: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, type: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string_String">string::String</a>, value: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
@@ -1068,7 +1068,7 @@ Add a property, already bcs encoded as a <code><a href="../../aptos-framework/..
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="property_map.md#0x4_property_map_add">add</a>(ref: &<a href="property_map.md#0x4_property_map_MutatorRef">MutatorRef</a>, key: String, type: String, value: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;) <b>acquires</b> <a href="property_map.md#0x4_property_map_PropertyMap">PropertyMap</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(ref: &<a href="property_map.md#0x4_property_map_MutatorRef">MutatorRef</a>, key: String, type: String, value: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;) <b>acquires</b> <a href="property_map.md#0x4_property_map_PropertyMap">PropertyMap</a> {
     <b>let</b> new_type = <a href="property_map.md#0x4_property_map_to_internal_type">to_internal_type</a>(type);
     <a href="property_map.md#0x4_property_map_validate_type">validate_type</a>(new_type, value);
     <a href="property_map.md#0x4_property_map_add_internal">add_internal</a>(ref, key, new_type, value);
@@ -1123,7 +1123,7 @@ Add a property that isn't already encoded as a <code><a href="../../aptos-framew
 <pre><code>inline <b>fun</b> <a href="property_map.md#0x4_property_map_add_internal">add_internal</a>(ref: &<a href="property_map.md#0x4_property_map_MutatorRef">MutatorRef</a>, key: String, type: u8, value: <a href="../../aptos-framework/../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;) {
     <a href="property_map.md#0x4_property_map_assert_exists">assert_exists</a>(ref.self);
     <b>let</b> <a href="property_map.md#0x4_property_map">property_map</a> = &<b>mut</b> <a href="property_map.md#0x4_property_map_PropertyMap">PropertyMap</a>[ref.self];
-    <a href="property_map.md#0x4_property_map">property_map</a>.inner.<a href="property_map.md#0x4_property_map_add">add</a>(key, <a href="property_map.md#0x4_property_map_PropertyValue">PropertyValue</a> { type, value });
+    <a href="property_map.md#0x4_property_map">property_map</a>.inner.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, <a href="property_map.md#0x4_property_map_PropertyValue">PropertyValue</a> { type, value });
 }
 </code></pre>
 

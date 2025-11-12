@@ -264,7 +264,7 @@ Returns a tuple of the signature type and the signature.
         <b>let</b> j = 0;
         <b>let</b> carry = (char_index <b>as</b> u16);
 
-        // For each existing byte, multiply by 58 and add carry
+        // For each existing byte, multiply by 58 and <a href="add.md#0x1_add">add</a> carry
         <b>while</b> (j &lt; bytes.length()) {
             <b>let</b> current = (bytes[j] <b>as</b> u16);
             <b>let</b> new_carry = current * base + carry;

@@ -4020,7 +4020,7 @@ Destroy an empty fungible asset.
             && <a href="fungible_asset.md#0x1_fungible_asset_concurrent_fungible_balance_exists_inline">concurrent_fungible_balance_exists_inline</a>(store_addr)) {
             <b>let</b> balance_resource =
                 <b>borrow_global_mut</b>&lt;<a href="fungible_asset.md#0x1_fungible_asset_ConcurrentFungibleBalance">ConcurrentFungibleBalance</a>&gt;(store_addr);
-            balance_resource.balance.add(amount);
+            balance_resource.balance.<a href="add.md#0x1_add">add</a>(amount);
         } <b>else</b> {
             store.balance = store.balance + amount;
         };

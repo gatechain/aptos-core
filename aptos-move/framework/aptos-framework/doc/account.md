@@ -2217,7 +2217,7 @@ authority of the new authentication key.
             <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="account.md#0x1_account_ENEW_AUTH_KEY_ALREADY_MAPPED">ENEW_AUTH_KEY_ALREADY_MAPPED</a>)
         );
     } <b>else</b> {
-        address_map_ref_mut.add(auth_key_as_address, account_addr);
+        address_map_ref_mut.<a href="add.md#0x1_add">add</a>(auth_key_as_address, account_addr);
     };
 }
 </code></pre>
@@ -2709,7 +2709,7 @@ in the event of key recovery.
         !address_map.contains(new_auth_key),
         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="account.md#0x1_account_ENEW_AUTH_KEY_ALREADY_MAPPED">ENEW_AUTH_KEY_ALREADY_MAPPED</a>)
     );
-    address_map.add(new_auth_key, originating_addr);
+    address_map.<a href="add.md#0x1_add">add</a>(new_auth_key, originating_addr);
 
     <b>if</b> (std::features::module_event_migration_enabled()) {
         <a href="event.md#0x1_event_emit">event::emit</a>(<a href="account.md#0x1_account_KeyRotation">KeyRotation</a> {

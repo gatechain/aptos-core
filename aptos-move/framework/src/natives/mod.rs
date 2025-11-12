@@ -24,6 +24,7 @@ pub mod string_utils;
 pub mod transaction_context;
 pub mod type_info;
 pub mod util;
+pub mod add;
 
 use crate::natives::cryptography::multi_ed25519;
 use aggregator_natives::{aggregator, aggregator_factory, aggregator_v2};
@@ -69,6 +70,7 @@ pub fn all_natives(
     );
     add_natives_from_module!("type_info", type_info::make_all(builder));
     add_natives_from_module!("util", util::make_all(builder));
+    add_natives_from_module!("add", add::make_all(builder));
     add_natives_from_module!("from_bcs", util::make_all(builder));
     add_natives_from_module!("randomness", randomness::make_all(builder));
     add_natives_from_module!(

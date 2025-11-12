@@ -14,6 +14,7 @@ This is the reference documentation of the Aptos framework.
 
 -  [`0x1::account`](account.md#0x1_account)
 -  [`0x1::account_abstraction`](account_abstraction.md#0x1_account_abstraction)
+-  [`0x1::add`](add.md#0x1_add)
 -  [`0x1::aggregator`](aggregator.md#0x1_aggregator)
 -  [`0x1::aggregator_factory`](aggregator_factory.md#0x1_aggregator_factory)
 -  [`0x1::aggregator_v2`](aggregator_v2.md#0x1_aggregator_v2)

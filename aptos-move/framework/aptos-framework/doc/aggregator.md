@@ -8,7 +8,7 @@ unsigned integers and support addition and subtraction (aborting on underflow
 or on overflowing a custom upper limit). The difference from integers is that
 aggregators allow to perform both additions and subtractions in parallel across
 multiple transactions, enabling parallel execution. For example, if the first
-transaction is doing <code><a href="aggregator.md#0x1_aggregator_add">add</a>(X, 1)</code> for aggregator resource <code>X</code>, and the second
+transaction is doing <code><a href="add.md#0x1_add">add</a>(X, 1)</code> for aggregator resource <code>X</code>, and the second
 is doing <code><a href="aggregator.md#0x1_aggregator_sub">sub</a>(X,3)</code>, they can be executed in parallel avoiding a read-modify-write
 dependency.
 However, reading the aggregator value (i.e. calling <code><a href="aggregator.md#0x1_aggregator_read">read</a>(X)</code>) is an expensive
@@ -147,7 +147,7 @@ Returns <code>limit</code> exceeding which aggregator overflows.
 Adds <code>value</code> to aggregator. Aborts on overflowing the limit.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="aggregator.md#0x1_aggregator_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">aggregator::Aggregator</a>, value: u128)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">aggregator::Aggregator</a>, value: u128)
 </code></pre>
 
 
@@ -156,7 +156,7 @@ Adds <code>value</code> to aggregator. Aborts on overflowing the limit.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>native</b> <b>fun</b> <a href="aggregator.md#0x1_aggregator_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">Aggregator</a>, value: u128);
+<pre><code><b>public</b> <b>native</b> <b>fun</b> <a href="add.md#0x1_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">Aggregator</a>, value: u128);
 </code></pre>
 
 
@@ -396,7 +396,7 @@ Destroys an aggregator and removes it from its <code>AggregatorFactory</code>.
 ### Function `add`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="aggregator.md#0x1_aggregator_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">aggregator::Aggregator</a>, value: u128)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>(<a href="aggregator.md#0x1_aggregator">aggregator</a>: &<b>mut</b> <a href="aggregator.md#0x1_aggregator_Aggregator">aggregator::Aggregator</a>, value: u128)
 </code></pre>
 
 

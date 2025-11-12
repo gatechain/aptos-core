@@ -1051,7 +1051,7 @@ Inserts the key/value into the BigOrderedMap.
 Aborts if the key is already in the map.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>&lt;K: <b>copy</b>, drop, store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">big_ordered_map::BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K: <b>copy</b>, drop, store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">big_ordered_map::BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V)
 </code></pre>
 
 
@@ -1060,7 +1060,7 @@ Aborts if the key is already in the map.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>&lt;K: drop + <b>copy</b> + store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V) {
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K: drop + <b>copy</b> + store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V) {
     self.<a href="big_ordered_map.md#0x1_big_ordered_map_add_or_upsert_impl">add_or_upsert_impl</a>(key, value, <b>false</b>).destroy_none()
 }
 </code></pre>
@@ -1273,7 +1273,7 @@ Returns true if element already existed.
 <pre><code><b>public</b> inline <b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_modify_or_add">modify_or_add</a>&lt;K: drop + <b>copy</b> + store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">BigOrderedMap</a>&lt;K, V&gt;, key: &K, modify_f: |&<b>mut</b> V| <b>has</b> drop, add_f: ||V <b>has</b> drop): bool {
     <b>let</b> <b>exists</b> = self.<a href="big_ordered_map.md#0x1_big_ordered_map_modify_if_present_and_return">modify_if_present_and_return</a>(key, |v| { modify_f(v); <b>true</b> }).is_some();
     <b>if</b> (!<b>exists</b>) {
-        self.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(*key, add_f());
+        self.<a href="add.md#0x1_add">add</a>(*key, add_f());
     };
     <b>exists</b>
 }
@@ -1362,7 +1362,7 @@ Aborts with EKEY_ALREADY_EXISTS if key already exist, or duplicate keys are pass
     // TODO: Can be optimized, both in insertion order (largest first, then from smallest),
     // <b>as</b> well <b>as</b> on initializing inner_max_degree/leaf_max_degree better
     keys.zip(values, |key, value| {
-        self.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(key, value);
+        self.<a href="add.md#0x1_add">add</a>(key, value);
     });
 }
 </code></pre>
@@ -1699,7 +1699,7 @@ Returns a reference to the element with its key, aborts if the key is not found.
 Returns a mutable reference to the element with its key at the given index, aborts if the key is not found.
 Aborts with EBORROW_MUT_REQUIRES_CONSTANT_VALUE_SIZE if KV size doesn't have constant size,
 because if it doesn't we cannot assert invariants on the size.
-In case of variable size, use either <code>borrow</code>, <code><b>copy</b></code> then <code>upsert</code>, or <code>remove</code> and <code>add</code> instead of mutable borrow.
+In case of variable size, use either <code>borrow</code>, <code><b>copy</b></code> then <code>upsert</code>, or <code>remove</code> and <code><a href="add.md#0x1_add">add</a></code> instead of mutable borrow.
 
 
 <pre><code><b>public</b> <b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_borrow_mut">borrow_mut</a>&lt;K: <b>copy</b>, drop, store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">big_ordered_map::BigOrderedMap</a>&lt;K, V&gt;, key: &K): &<b>mut</b> V
@@ -2315,7 +2315,7 @@ Mutably borrows the value iterator points to.
 Aborts with EITER_OUT_OF_BOUNDS if iterator is pointing to the end.
 Aborts with EBORROW_MUT_REQUIRES_CONSTANT_VALUE_SIZE if KV size doesn't have constant size,
 because if it doesn't we cannot assert invariants on the size.
-In case of variable size, use either <code>borrow</code>, <code><b>copy</b></code> then <code>upsert</code>, or <code>remove</code> and <code>add</code> instead of mutable borrow.
+In case of variable size, use either <code>borrow</code>, <code><b>copy</b></code> then <code>upsert</code>, or <code>remove</code> and <code><a href="add.md#0x1_add">add</a></code> instead of mutable borrow.
 
 Note: Requires that the map is not changed after the input iterator is generated.
 
@@ -2764,7 +2764,7 @@ Borrow a node mutably, given an index. Works for both root (i.e. inline) node an
             };
             <b>let</b> last_value = current_node.children.<a href="big_ordered_map.md#0x1_big_ordered_map_internal_new_end_iter">internal_new_end_iter</a>().<a href="big_ordered_map.md#0x1_big_ordered_map_iter_prev">iter_prev</a>(&current_node.children).<a href="big_ordered_map.md#0x1_big_ordered_map_iter_remove">iter_remove</a>(&<b>mut</b> current_node.children);
             current = last_value.node_index.stored_to_index();
-            current_node.children.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(key, last_value);
+            current_node.children.<a href="add.md#0x1_add">add</a>(key, last_value);
         };
     };
 
@@ -3262,7 +3262,7 @@ If <code>allow_overwrite</code> is not set, function will abort if <code>key</co
 
 
 <pre><code><b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_add_at">add_at</a>&lt;K: drop + <b>copy</b> + store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">BigOrderedMap</a>&lt;K, V&gt;, path_to_node: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;, key: K, child: <a href="big_ordered_map.md#0x1_big_ordered_map_Child">Child</a>&lt;V&gt;, allow_overwrite: bool): Option&lt;<a href="big_ordered_map.md#0x1_big_ordered_map_Child">Child</a>&lt;V&gt;&gt; {
-    // Last node in the path is one <b>where</b> we need <b>to</b> add the child <b>to</b>.
+    // Last node in the path is one <b>where</b> we need <b>to</b> <a href="add.md#0x1_add">add</a> the child <b>to</b>.
     <b>let</b> node_index = path_to_node.<a href="big_ordered_map.md#0x1_big_ordered_map_pop_back">pop_back</a>();
     {
         // First check <b>if</b> we can perform this operation, without changing structure of the tree (i.e. without adding <a href="../../aptos-stdlib/doc/any.md#0x1_any">any</a> nodes).
@@ -3292,7 +3292,7 @@ If <code>allow_overwrite</code> is not set, function will abort if <code>key</co
             };
         };
 
-        // If we cannot add more nodes without exceeding the size,
+        // If we cannot <a href="add.md#0x1_add">add</a> more nodes without exceeding the size,
         // but node <b>with</b> `key` already <b>exists</b>, we either need <b>to</b> replace or <b>abort</b>.
         <b>let</b> iter = children.<a href="big_ordered_map.md#0x1_big_ordered_map_internal_find">internal_find</a>(&key);
         <b>if</b> (!iter.<a href="big_ordered_map.md#0x1_big_ordered_map_iter_is_end">iter_is_end</a>(children)) {
@@ -3328,7 +3328,7 @@ If <code>allow_overwrite</code> is not set, function will abort if <code>key</co
             max_key
         };
         // New root will have start <b>with</b> a single child - the existing root (which will be at replacement location).
-        new_root_node.children.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(max_key, <a href="big_ordered_map.md#0x1_big_ordered_map_new_inner_child">new_inner_child</a>(replacement_node_slot));
+        new_root_node.children.<a href="add.md#0x1_add">add</a>(max_key, <a href="big_ordered_map.md#0x1_big_ordered_map_new_inner_child">new_inner_child</a>(replacement_node_slot));
         <b>let</b> node = self.<a href="big_ordered_map.md#0x1_big_ordered_map_replace_root">replace_root</a>(new_root_node);
 
         // we moved the currently processing node one level down, so we need <b>to</b> <b>update</b> the path
@@ -3384,7 +3384,7 @@ If <code>allow_overwrite</code> is not set, function will abort if <code>key</co
     <b>let</b> target_size = (max_degree + 1) / 2;
 
     // Add child (which will exceed the size), and then trim off <b>to</b> create two sets of children of correct sizes.
-    left_children.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(key, child);
+    left_children.<a href="add.md#0x1_add">add</a>(key, child);
     <b>let</b> right_node_children = left_children.trim(target_size);
 
     <b>assert</b>!(left_children.length() &lt;= max_degree, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_state">error::invalid_state</a>(<a href="big_ordered_map.md#0x1_big_ordered_map_EINTERNAL_INVARIANT_BROKEN">EINTERNAL_INVARIANT_BROKEN</a>));
@@ -3596,7 +3596,7 @@ Given a path to node (excluding the node itself), which is currently stored unde
             <b>let</b> borrowed_max_key = *sibling_end_iter.<a href="big_ordered_map.md#0x1_big_ordered_map_iter_borrow_key">iter_borrow_key</a>(sibling_children);
             <b>let</b> borrowed_element = sibling_end_iter.<a href="big_ordered_map.md#0x1_big_ordered_map_iter_remove">iter_remove</a>(sibling_children);
 
-            children.<a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>(borrowed_max_key, borrowed_element);
+            children.<a href="add.md#0x1_add">add</a>(borrowed_max_key, borrowed_element);
 
             // max_key of the sibling node changed, so <b>update</b>
             self.<a href="big_ordered_map.md#0x1_big_ordered_map_update_key">update_key</a>(path_to_node, &borrowed_max_key, *sibling_children.<a href="big_ordered_map.md#0x1_big_ordered_map_internal_new_end_iter">internal_new_end_iter</a>().<a href="big_ordered_map.md#0x1_big_ordered_map_iter_prev">iter_prev</a>(sibling_children).<a href="big_ordered_map.md#0x1_big_ordered_map_iter_borrow_key">iter_borrow_key</a>(sibling_children));
@@ -3762,7 +3762,7 @@ Given a path to node (excluding the node itself), which is currently stored unde
     map_new = new,
     map_destroy_empty = destroy_empty,
     map_has_key = contains,
-    map_add_no_override = add,
+    map_add_no_override = <a href="add.md#0x1_add">add</a>,
     map_borrow = borrow,
     map_borrow_mut = borrow_mut,
     map_spec_get = spec_get,
@@ -3981,7 +3981,7 @@ Given a path to node (excluding the node itself), which is currently stored unde
 ### Function `add`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="big_ordered_map.md#0x1_big_ordered_map_add">add</a>&lt;K: <b>copy</b>, drop, store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">big_ordered_map::BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K: <b>copy</b>, drop, store, V: store&gt;(self: &<b>mut</b> <a href="big_ordered_map.md#0x1_big_ordered_map_BigOrderedMap">big_ordered_map::BigOrderedMap</a>&lt;K, V&gt;, key: K, value: V)
 </code></pre>
 
 

@@ -436,7 +436,7 @@ Add a key/value pair to the map.
 Aborts with EKEY_ALREADY_EXISTS if key already exist.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">ordered_map::OrderedMap</a>&lt;K, V&gt;, key: K, value: V)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">ordered_map::OrderedMap</a>&lt;K, V&gt;, key: K, value: V)
 </code></pre>
 
 
@@ -445,7 +445,7 @@ Aborts with EKEY_ALREADY_EXISTS if key already exist.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">OrderedMap</a>&lt;K, V&gt;, key: K, value: V) {
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">OrderedMap</a>&lt;K, V&gt;, key: K, value: V) {
     <b>let</b> len = self.entries.<a href="ordered_map.md#0x1_ordered_map_length">length</a>();
     <b>let</b> index = <a href="ordered_map.md#0x1_ordered_map_binary_search">binary_search</a>(&key, &self.entries, 0, len);
 
@@ -581,7 +581,7 @@ Returns true if element already existed.
 <pre><code><b>public</b> inline <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_modify_or_add">modify_or_add</a>&lt;K: drop + <b>copy</b> + store, V: store&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">OrderedMap</a>&lt;K, V&gt;, key: &K, modify_f: |&<b>mut</b> V| <b>has</b> drop, add_f: ||V <b>has</b> drop): bool {
     <b>let</b> <b>exists</b> = self.<a href="ordered_map.md#0x1_ordered_map_modify_if_present">modify_if_present</a>(key, |v| modify_f(v));
     <b>if</b> (!<b>exists</b>) {
-        self.<a href="ordered_map.md#0x1_ordered_map_add">add</a>(*key, add_f());
+        self.<a href="add.md#0x1_add">add</a>(*key, add_f());
     };
     <b>exists</b>
 }
@@ -816,7 +816,7 @@ Aborts with EKEY_ALREADY_EXISTS if key already exist, or duplicate keys are pass
 <pre><code><b>public</b> <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_add_all">add_all</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">OrderedMap</a>&lt;K, V&gt;, keys: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;K&gt;, values: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;V&gt;) {
     // TODO: Can be optimized, by sorting keys and values, and then creating map.
     keys.zip(values, |key, value| {
-        self.<a href="ordered_map.md#0x1_ordered_map_add">add</a>(key, value);
+        self.<a href="add.md#0x1_add">add</a>(key, value);
     });
 }
 </code></pre>
@@ -2048,7 +2048,7 @@ Apply the function to a mutable reference of each key-value pair in the map.
     map_len = length,
     map_destroy_empty = destroy_empty,
     map_has_key = contains,
-    map_add_no_override = add,
+    map_add_no_override = <a href="add.md#0x1_add">add</a>,
     map_borrow = borrow,
     map_borrow_mut = borrow_mut,
     map_spec_get = spec_get,
@@ -2181,7 +2181,7 @@ Apply the function to a mutable reference of each key-value pair in the map.
 ### Function `add`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="ordered_map.md#0x1_ordered_map_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">ordered_map::OrderedMap</a>&lt;K, V&gt;, key: K, value: V)
+<pre><code><b>public</b> <b>fun</b> <a href="add.md#0x1_add">add</a>&lt;K, V&gt;(self: &<b>mut</b> <a href="ordered_map.md#0x1_ordered_map_OrderedMap">ordered_map::OrderedMap</a>&lt;K, V&gt;, key: K, value: V)
 </code></pre>
 
 

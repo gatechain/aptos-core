@@ -1966,7 +1966,7 @@
     // cannot polute events <b>to</b> each other, accidentally or maliciously.
     <b>let</b> pre_cancellation_window = config.pre_cancellation_window_secs;
     <b>let</b> <a href="pre_cancellation_tracker.md#0x7_pre_cancellation_tracker">pre_cancellation_tracker</a> = <a href="../../aptos-framework/../aptos-stdlib/doc/table.md#0x1_table_new">table::new</a>();
-    <a href="pre_cancellation_tracker.md#0x7_pre_cancellation_tracker">pre_cancellation_tracker</a>.add(
+    <a href="pre_cancellation_tracker.md#0x7_pre_cancellation_tracker">pre_cancellation_tracker</a>.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(
         <a href="market_types.md#0x7_market_types_PRE_CANCELLATION_TRACKER_KEY">PRE_CANCELLATION_TRACKER_KEY</a>,
         new_pre_cancellation_tracker(pre_cancellation_window)
     );

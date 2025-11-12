@@ -286,7 +286,7 @@
     <b>assert</b>!(!handles.contains(&key), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="permissioned_delegation.md#0x1_permissioned_delegation_EDELEGATION_EXISTENCE">EDELEGATION_EXISTENCE</a>));
     <b>let</b> handle = <a href="permissioned_signer.md#0x1_permissioned_signer_create_storable_permissioned_handle">permissioned_signer::create_storable_permissioned_handle</a>(master, expiration_time);
     <b>let</b> <a href="permissioned_signer.md#0x1_permissioned_signer">permissioned_signer</a> = <a href="permissioned_signer.md#0x1_permissioned_signer_signer_from_storable_permissioned_handle">permissioned_signer::signer_from_storable_permissioned_handle</a>(&handle);
-    handles.add(key, AccountDelegation::V1 { handle, <a href="rate_limiter.md#0x1_rate_limiter">rate_limiter</a> });
+    handles.<a href="add.md#0x1_add">add</a>(key, AccountDelegation::V1 { handle, <a href="rate_limiter.md#0x1_rate_limiter">rate_limiter</a> });
     <a href="permissioned_signer.md#0x1_permissioned_signer">permissioned_signer</a>
 }
 </code></pre>
@@ -456,7 +456,7 @@ Authorization function for account abstraction.
         <b>if</b> (delegations.contains(&key)) {
             <b>let</b> delegation = delegations.remove(&key);
             <a href="permissioned_delegation.md#0x1_permissioned_delegation_check_txn_rate">check_txn_rate</a>(&<b>mut</b> delegation, count_rate);
-            delegations.add(key, delegation);
+            delegations.<a href="add.md#0x1_add">add</a>(key, delegation);
             &delegations.borrow(&key).handle
         } <b>else</b> {
             <b>abort</b> <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_permission_denied">error::permission_denied</a>(<a href="permissioned_delegation.md#0x1_permissioned_delegation_EINVALID_SIGNATURE">EINVALID_SIGNATURE</a>)

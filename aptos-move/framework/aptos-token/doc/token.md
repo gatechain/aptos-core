@@ -2986,7 +2986,7 @@ Allow creator to mutate the default properties in TokenData
         <b>if</b> (old_pv.is_some()) {
             token_data.default_properties.update_property_value(key, new_pv);
         } <b>else</b> {
-            token_data.default_properties.add(*key, new_pv);
+            token_data.default_properties.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(*key, new_pv);
         };
     };
     <a href="token_event_store.md#0x3_token_event_store_emit_default_property_mutate_event">token_event_store::emit_default_property_mutate_event</a>(creator, token_data_id.collection, token_data_id.name, keys, old_values, new_values);
@@ -3591,7 +3591,7 @@ Create a new collection to hold tokens
         mutability_config
     };
 
-    collection_data.add(name, collection);
+    collection_data.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(name, collection);
     <b>let</b> collection_handle = &<b>mut</b> <a href="token.md#0x3_token_Collections">Collections</a>[account_addr];
     <b>if</b> (std::features::module_event_migration_enabled()) {
         <a href="../../aptos-framework/doc/event.md#0x1_event_emit">event::emit</a>(
@@ -3760,7 +3760,7 @@ Create a new collection to hold tokens
         mutability_config: token_mutate_config,
     };
 
-    collections.token_data.add(token_data_id, token_data);
+    collections.token_data.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(token_data_id, token_data);
     <b>if</b> (std::features::module_event_migration_enabled()) {
         <a href="../../aptos-framework/doc/event.md#0x1_event_emit">event::emit</a>(
             <a href="token.md#0x3_token_TokenDataCreation">TokenDataCreation</a> {
@@ -4129,7 +4129,7 @@ return the TokenId for a given Token
         token_data.supply += amount;
     };
 
-    // we add more tokens <b>with</b> property_version 0
+    // we <a href="../../aptos-framework/doc/add.md#0x1_add">add</a> more tokens <b>with</b> property_version 0
     <b>let</b> token_id = <a href="token.md#0x3_token_create_token_id">create_token_id</a>(token_data_id, 0);
     <b>if</b> (std::features::module_event_migration_enabled()) {
         <a href="../../aptos-framework/doc/event.md#0x1_event_emit">event::emit</a>(<a href="token.md#0x3_token_Mint">Mint</a> { creator: creator_addr, id: token_data_id, amount })
@@ -4196,7 +4196,7 @@ create tokens and directly deposite to receiver's address. The receiver should o
         token_data.supply += amount;
     };
 
-    // we add more tokens <b>with</b> property_version 0
+    // we <a href="../../aptos-framework/doc/add.md#0x1_add">add</a> more tokens <b>with</b> property_version 0
     <b>let</b> token_id = <a href="token.md#0x3_token_create_token_id">create_token_id</a>(token_data_id, 0);
 
     <b>if</b> (std::features::module_event_migration_enabled()) {
@@ -5187,7 +5187,7 @@ Deposit the token balance into the recipients account and emit an event.
     );
 
     <b>if</b> (!token_store.tokens.contains(<a href="token.md#0x3_token">token</a>.id)) {
-        token_store.tokens.add(<a href="token.md#0x3_token">token</a>.id, <a href="token.md#0x3_token">token</a>);
+        token_store.tokens.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(<a href="token.md#0x3_token">token</a>.id, <a href="token.md#0x3_token">token</a>);
     } <b>else</b> {
         <b>let</b> recipient_token = token_store.tokens.borrow_mut(<a href="token.md#0x3_token">token</a>.id);
         <a href="token.md#0x3_token_merge">merge</a>(recipient_token, <a href="token.md#0x3_token">token</a>);

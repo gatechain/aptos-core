@@ -241,8 +241,8 @@ This reduces the latency to submit a cancellation transaction from 500 ms to 0.
         expiration_time,
         account_order_id
     };
-    tracker.account_order_ids.add(account_order_id, expiration_time);
-    tracker.expiration_with_order_ids.add(order_id_with_expiration, <b>true</b>);
+    tracker.account_order_ids.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(account_order_id, expiration_time);
+    tracker.expiration_with_order_ids.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(order_id_with_expiration, <b>true</b>);
 }
 </code></pre>
 

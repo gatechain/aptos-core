@@ -4408,7 +4408,7 @@ Add <code>amount</code> of coins to the delegation pool <code>pool_address</code
     amount: u64
 ) <b>acquires</b> <a href="delegation_pool.md#0x1_delegation_pool_DelegationPool">DelegationPool</a>, <a href="delegation_pool.md#0x1_delegation_pool_GovernanceRecords">GovernanceRecords</a>, <a href="delegation_pool.md#0x1_delegation_pool_BeneficiaryForOperator">BeneficiaryForOperator</a>, <a href="delegation_pool.md#0x1_delegation_pool_NextCommissionPercentage">NextCommissionPercentage</a>, <a href="delegation_pool.md#0x1_delegation_pool_DelegationPoolAllowlisting">DelegationPoolAllowlisting</a> {
     <a href="delegation_pool.md#0x1_delegation_pool_check_stake_management_permission">check_stake_management_permission</a>(delegator);
-    // short-circuit <b>if</b> amount <b>to</b> add is 0 so no <a href="event.md#0x1_event">event</a> is emitted
+    // short-circuit <b>if</b> amount <b>to</b> <a href="add.md#0x1_add">add</a> is 0 so no <a href="event.md#0x1_event">event</a> is emitted
     <b>if</b> (amount == 0) { <b>return</b> };
 
     <b>let</b> delegator_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(delegator);

@@ -214,7 +214,7 @@ There is a code bug that breaks internal invariant
 
 
 <pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="price_time_index.md#0x7_price_time_index_new_price_time_idx">new_price_time_idx</a>(): <a href="price_time_index.md#0x7_price_time_index_PriceTimeIndex">PriceTimeIndex</a> {
-    // potentially add max value <b>to</b> both sides (that will be skipped),
+    // potentially <a href="../../aptos-framework/doc/add.md#0x1_add">add</a> max value <b>to</b> both sides (that will be skipped),
     // so that max_key never changes, and doesn't create conflict.
     PriceTimeIndex::V1 {
         buys: new_default_big_ordered_map(),
@@ -796,9 +796,9 @@ Decrease the size of the order in the order book without altering its position i
     // Assert that this is not a taker order
     <b>assert</b>!(!self.<a href="price_time_index.md#0x7_price_time_index_is_taker_order">is_taker_order</a>(price, is_bid), <a href="price_time_index.md#0x7_price_time_index_EINVALID_MAKER_ORDER">EINVALID_MAKER_ORDER</a>);
     <b>if</b> (is_bid) {
-        self.buys.add(key, value);
+        self.buys.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, value);
     } <b>else</b> {
-        self.sells.add(key, value);
+        self.sells.<a href="../../aptos-framework/doc/add.md#0x1_add">add</a>(key, value);
     };
 }
 </code></pre>

@@ -614,7 +614,7 @@ only be obtained as a part of the governance script.
     <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features_is_derivable_account_abstraction_enabled">features::is_derivable_account_abstraction_enabled</a>(), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_state">error::invalid_state</a>(<a href="account_abstraction.md#0x1_account_abstraction_EDERIVABLE_ACCOUNT_ABSTRACTION_NOT_ENABLED">EDERIVABLE_ACCOUNT_ABSTRACTION_NOT_ENABLED</a>));
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
 
-    <a href="account_abstraction.md#0x1_account_abstraction_DerivableDispatchableAuthenticator">DerivableDispatchableAuthenticator</a>[@aptos_framework].auth_functions.add(
+    <a href="account_abstraction.md#0x1_account_abstraction_DerivableDispatchableAuthenticator">DerivableDispatchableAuthenticator</a>[@aptos_framework].auth_functions.<a href="add.md#0x1_add">add</a>(
         <a href="function_info.md#0x1_function_info_new_function_info_from_address">function_info::new_function_info_from_address</a>(module_address, module_name, function_name),
         DerivableRegisterValue::Empty,
     );
@@ -720,11 +720,11 @@ only be obtained as a part of the governance script.
             !current_map.contains(&auth_function),
             <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="account_abstraction.md#0x1_account_abstraction_EFUNCTION_INFO_EXISTENCE">EFUNCTION_INFO_EXISTENCE</a>)
         );
-        current_map.add(auth_function, <b>true</b>);
+        current_map.<a href="add.md#0x1_add">add</a>(auth_function, <b>true</b>);
         <a href="event.md#0x1_event_emit">event::emit</a>(
             <a href="account_abstraction.md#0x1_account_abstraction_UpdateDispatchableAuthenticator">UpdateDispatchableAuthenticator</a> {
                 <a href="account.md#0x1_account">account</a>: addr,
-                <b>update</b>: b"add",
+                <b>update</b>: b"<a href="add.md#0x1_add">add</a>",
                 auth_function,
             }
         );

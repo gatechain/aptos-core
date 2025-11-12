@@ -255,6 +255,8 @@ pub enum EntryFunctionCall {
 
     AccountAbstractionRemoveDispatchableAuthenticator {},
 
+    AddDebugTestAdd {},
+
     /// Batch version of APT transfer.
     AptosAccountBatchTransfer {
         recipients: Vec<AccountAddress>,
@@ -1384,6 +1386,7 @@ impl EntryFunctionCall {
             AccountAbstractionRemoveDispatchableAuthenticator {} => {
                 account_abstraction_remove_dispatchable_authenticator()
             },
+            AddDebugTestAdd {} => add_debug_test_add(),
             AptosAccountBatchTransfer {
                 recipients,
                 amounts,
@@ -2509,6 +2512,21 @@ pub fn account_abstraction_remove_dispatchable_authenticator() -> TransactionPay
             ident_str!("account_abstraction").to_owned(),
         ),
         ident_str!("remove_dispatchable_authenticator").to_owned(),
+        vec![],
+        vec![],
+    ))
+}
+
+pub fn add_debug_test_add() -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("add").to_owned(),
+        ),
+        ident_str!("debug_test_add").to_owned(),
         vec![],
         vec![],
     ))
@@ -5780,6 +5798,14 @@ mod decoder {
         }
     }
 
+    pub fn add_debug_test_add(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(_script) = payload {
+            Some(EntryFunctionCall::AddDebugTestAdd {})
+        } else {
+            None
+        }
+    }
+
     pub fn aptos_account_batch_transfer(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
         if let TransactionPayload::EntryFunction(script) = payload {
             Some(EntryFunctionCall::AptosAccountBatchTransfer {
@@ -7609,6 +7635,10 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
         map.insert(
             "account_abstraction_remove_dispatchable_authenticator".to_string(),
             Box::new(decoder::account_abstraction_remove_dispatchable_authenticator),
+        );
+        map.insert(
+            "add_debug_test_add".to_string(),
+            Box::new(decoder::add_debug_test_add),
         );
         map.insert(
             "aptos_account_batch_transfer".to_string(),
