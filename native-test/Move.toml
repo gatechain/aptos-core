@@ -1,0 +1,10 @@
+[package]
+name = "add_test_module"
+version = "1.0.0"
+
+[addresses]
+
+[dev-addresses]
+
+[dependencies]
+AptosFramework = { local = "../aptos-move/framework/aptos-framework" }
