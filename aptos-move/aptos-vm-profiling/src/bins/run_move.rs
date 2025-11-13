@@ -165,6 +165,12 @@ fn main() -> Result<()> {
         &mut builder,
     ));
 
+    natives.extend(aptos_dex_natives::dex_natives(
+        stdlib_addr,
+        &mut builder,
+    ));
+    
+
     let runtime_environment = RuntimeEnvironment::new(natives);
     let mut storage = InMemoryStorage::new_with_runtime_environment(runtime_environment);
 

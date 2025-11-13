@@ -7,6 +7,7 @@ use crate::{
         resource_state_key, write_op_converter::WriteOpConverter, AptosMoveResolver, SessionId,
     },
 };
+use aptos_dex_natives::{DexChangeSet, NativeDexContext};
 use aptos_framework::natives::{
     aggregator_natives::{AggregatorChangeSet, AggregatorChangeV1, NativeAggregatorContext},
     code::{NativeCodeContext, PublishRequest},
@@ -19,9 +20,12 @@ use aptos_framework::natives::{
 };
 use aptos_table_natives::{NativeTableContext, TableChangeSet};
 use aptos_types::{
-    chain_id::ChainId, contract_event::ContractEvent, on_chain_config::Features,
-    state_store::state_key::StateKey,
-    transaction::user_transaction_context::UserTransactionContext, write_set::WriteOp,
+    chain_id::ChainId,
+    contract_event::ContractEvent,
+    on_chain_config::Features,
+    state_store::{state_key::StateKey, state_value::StateValueMetadata},
+    transaction::user_transaction_context::UserTransactionContext,
+    write_set::WriteOp,
 };
 use aptos_vm_types::{
     change_set::VMChangeSet, module_and_script_storage::module_storage::AptosModuleStorage,
@@ -30,10 +34,10 @@ use aptos_vm_types::{
 use bytes::Bytes;
 use move_binary_format::errors::{Location, PartialVMError, PartialVMResult, VMResult};
 use move_core_types::{
-    effects::{AccountChanges, Changes, Op as MoveStorageOp},
+    effects::{AccountChanges, Changes, Op, Op as MoveStorageOp},
     identifier::IdentStr,
     language_storage::{ModuleId, StructTag, TypeTag},
-    value::MoveTypeLayout,
+    value::{MoveTypeLayout, MoveValue},
     vm_status::StatusCode,
 };
 use move_vm_runtime::{
@@ -50,7 +54,7 @@ use move_vm_runtime::{
 use move_vm_types::{
     gas::GasMeter,
     value_serde::{FunctionValueExtension, ValueSerDeContext},
-    values::Value,
+    values::{Struct, Value},
 };
 use std::{borrow::Borrow, collections::BTreeMap};
 use triomphe::Arc as TriompheArc;
@@ -222,6 +226,9 @@ where
             .into_change_set(&function_extension)
             .map_err(|e| e.finish(Location::Undefined))?;
 
+        let dex_context: NativeDexContext = extensions.remove();
+        let dex_change_set = dex_context.into_change_set();
+
         let aggregator_context: NativeAggregatorContext = extensions.remove();
         let aggregator_change_set = aggregator_context
             .into_change_set()
@@ -238,6 +245,7 @@ where
             resource_group_change_set,
             events,
             table_change_set,
+            dex_change_set,
             aggregator_change_set,
             configs.legacy_resource_creation_as_modification(),
         )
@@ -438,6 +446,7 @@ where
         resource_group_change_set: ResourceGroupChangeSet,
         events: Vec<(ContractEvent, Option<MoveTypeLayout>)>,
         table_change_set: TableChangeSet,
+        dex_change_set: DexChangeSet,
         aggregator_change_set: AggregatorChangeSet,
         legacy_resource_creation_as_modification: bool,
     ) -> PartialVMResult<VMChangeSet> {
@@ -482,6 +491,18 @@ where
                 let op = woc.convert_resource(&state_key, value_op, false)?;
                 resource_write_set.insert(state_key, op);
             }
+        }
+
+        for ((addr, struct_tag), value_op) in dex_change_set.changes {
+            let state_key = resource_state_key(&addr, &struct_tag)?;
+                         let v = match value_op {
+                    Op::New(value) => value.0,
+                    Op::Modify(value) => value.0,
+                    Op::Delete => todo!(),
+                };
+
+                let write_op = WriteOp::creation(v, StateValueMetadata::none());
+                resource_write_set.insert(state_key, (write_op,None));
         }
 
         for (state_key, change) in aggregator_change_set.aggregator_v1_changes {
@@ -577,5 +598,7 @@ where
     extensions.add(NativeStateStorageContext::new(data_view));
     extensions.add(NativeEventContext::default());
     extensions.add(NativeObjectContext::default());
+    // add dex context
+    extensions.add(NativeDexContext::new(data_view));
     extensions
 }

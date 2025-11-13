@@ -1359,6 +1359,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "aptos-dex-natives"
+version = "0.1.0"
+dependencies = [
+ "aptos-gas-schedule",
+ "aptos-native-interface",
+ "aptos-types",
+ "bcs 0.1.4",
+ "better_any",
+ "bytes",
+ "move-core-types",
+ "move-vm-runtime",
+ "move-vm-types",
+ "sha3 0.9.1",
+ "smallvec",
+ "triomphe",
+]
+
+[[package]]
 name = "aptos-dkg"
 version = "0.2.0"
 dependencies = [
@@ -4877,6 +4895,7 @@ dependencies = [
  "aptos-block-partitioner",
  "aptos-crypto",
  "aptos-crypto-derive",
+ "aptos-dex-natives",
  "aptos-experimental-runtimes",
  "aptos-framework",
  "aptos-gas-algebra",
@@ -4942,6 +4961,7 @@ dependencies = [
 name = "aptos-vm-environment"
 version = "0.0.1"
 dependencies = [
+ "aptos-dex-natives",
  "aptos-framework",
  "aptos-gas-algebra",
  "aptos-gas-schedule",
@@ -5009,6 +5029,7 @@ dependencies = [
  "anyhow",
  "aptos-block-executor",
  "aptos-cached-packages",
+ "aptos-dex-natives",
  "aptos-gas-schedule",
  "aptos-move-stdlib",
  "aptos-native-interface",

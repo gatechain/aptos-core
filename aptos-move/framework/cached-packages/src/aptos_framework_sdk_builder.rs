@@ -559,6 +559,13 @@ pub enum EntryFunctionCall {
         amount: u64,
     },
 
+    DexTestCreatePool {},
+
+    DexTestDex {},
+
+    /// Second transaction: Query pool state
+    DexTestGetPool {},
+
     /// This can be called to install or update a set of JWKs for a federated OIDC provider.  This function should
     /// be invoked to intially install a set of JWKs or to update a set of JWKs when a keypair is rotated.
     ///
@@ -1565,6 +1572,9 @@ impl EntryFunctionCall {
                 pool_address,
                 amount,
             } => delegation_pool_withdraw(pool_address, amount),
+            DexTestCreatePool {} => dex_test_create_pool(),
+            DexTestDex {} => dex_test_dex(),
+            DexTestGetPool {} => dex_test_get_pool(),
             JwksUpdateFederatedJwkSet {
                 iss,
                 kid_vec,
@@ -3457,6 +3467,52 @@ pub fn delegation_pool_withdraw(pool_address: AccountAddress, amount: u64) -> Tr
             bcs::to_bytes(&pool_address).unwrap(),
             bcs::to_bytes(&amount).unwrap(),
         ],
+    ))
+}
+
+pub fn dex_test_create_pool() -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("dex").to_owned(),
+        ),
+        ident_str!("test_create_pool").to_owned(),
+        vec![],
+        vec![],
+    ))
+}
+
+pub fn dex_test_dex() -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("dex").to_owned(),
+        ),
+        ident_str!("test_dex").to_owned(),
+        vec![],
+        vec![],
+    ))
+}
+
+/// Second transaction: Query pool state
+pub fn dex_test_get_pool() -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("dex").to_owned(),
+        ),
+        ident_str!("test_get_pool").to_owned(),
+        vec![],
+        vec![],
     ))
 }
 
@@ -6360,6 +6416,30 @@ mod decoder {
         }
     }
 
+    pub fn dex_test_create_pool(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(_script) = payload {
+            Some(EntryFunctionCall::DexTestCreatePool {})
+        } else {
+            None
+        }
+    }
+
+    pub fn dex_test_dex(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(_script) = payload {
+            Some(EntryFunctionCall::DexTestDex {})
+        } else {
+            None
+        }
+    }
+
+    pub fn dex_test_get_pool(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(_script) = payload {
+            Some(EntryFunctionCall::DexTestGetPool {})
+        } else {
+            None
+        }
+    }
+
     pub fn jwks_update_federated_jwk_set(
         payload: &TransactionPayload,
     ) -> Option<EntryFunctionCall> {
@@ -7823,6 +7903,15 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
         map.insert(
             "delegation_pool_withdraw".to_string(),
             Box::new(decoder::delegation_pool_withdraw),
+        );
+        map.insert(
+            "dex_test_create_pool".to_string(),
+            Box::new(decoder::dex_test_create_pool),
+        );
+        map.insert("dex_test_dex".to_string(), Box::new(decoder::dex_test_dex));
+        map.insert(
+            "dex_test_get_pool".to_string(),
+            Box::new(decoder::dex_test_get_pool),
         );
         map.insert(
             "jwks_update_federated_jwk_set".to_string(),

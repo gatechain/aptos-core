@@ -42,5 +42,9 @@ pub fn aptos_natives_with_builder(
             CORE_CODE_ADDRESS,
             builder,
         ))
+        .chain(aptos_dex_natives::dex_natives(
+            CORE_CODE_ADDRESS,
+            builder,
+        ))
         .collect()
 }
