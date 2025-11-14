@@ -204,6 +204,7 @@ pub fn native_get_pool(
 
     let _gv = dex_ctx.get_or_create_pool(pool_addr, &pool_tag);
 
+    // Note: How to parse/extract the value of gv?
     Ok(smallvec![Value::u64(1)])
 }
 

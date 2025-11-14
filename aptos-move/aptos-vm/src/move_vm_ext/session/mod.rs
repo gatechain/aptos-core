@@ -37,7 +37,7 @@ use move_core_types::{
     effects::{AccountChanges, Changes, Op, Op as MoveStorageOp},
     identifier::IdentStr,
     language_storage::{ModuleId, StructTag, TypeTag},
-    value::{MoveTypeLayout, MoveValue},
+    value::{MoveTypeLayout},
     vm_status::StatusCode,
 };
 use move_vm_runtime::{
@@ -54,7 +54,7 @@ use move_vm_runtime::{
 use move_vm_types::{
     gas::GasMeter,
     value_serde::{FunctionValueExtension, ValueSerDeContext},
-    values::{Struct, Value},
+    values::{Value},
 };
 use std::{borrow::Borrow, collections::BTreeMap};
 use triomphe::Arc as TriompheArc;
