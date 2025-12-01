@@ -49,6 +49,9 @@ struct Args {
     num_validators: Option<usize>,
     #[clap(long)]
     num_validator_fullnodes: Option<usize>,
+
+    #[clap(long)]
+    seed_addr: Option<String>,
     #[clap(
         long,
         help = "Specify a test suite to run",
@@ -267,6 +270,8 @@ fn main() -> Result<()> {
             if let Some(num_validator_fullnodes) = args.num_validator_fullnodes {
                 test_suite = test_suite.with_initial_fullnode_count(num_validator_fullnodes)
             }
+
+            test_suite= test_suite.with_seed_addr(args.seed_addr.clone());
 
             // Run the test suite
             match test_cmd {

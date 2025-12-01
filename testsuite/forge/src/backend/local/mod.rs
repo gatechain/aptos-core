@@ -11,6 +11,7 @@ use aptos_infallible::Mutex;
 use rand::rngs::StdRng;
 use std::{
     collections::HashMap,
+    net::SocketAddr,
     num::NonZeroUsize,
     path::{Path, PathBuf},
     sync::Arc,
@@ -176,6 +177,7 @@ impl Factory for LocalFactory {
         &self,
         rng: &mut StdRng,
         num_validators: NonZeroUsize,
+        seed_addr: Option<String>,
         num_fullnodes: usize,
         version: &Version,
         _genesis_version: &Version,
@@ -198,6 +200,29 @@ impl Factory for LocalFactory {
         // no guarding, as this code path is not used in parallel
         let guard = ActiveNodesGuard::grab(1, Arc::new(Mutex::new(0))).await;
 
+        // Parse the optional seed address for validator network listen address.
+        // If not provided or invalid, fall back to an ephemeral port on all interfaces.
+        let seed_socket_addr: Option<SocketAddr> = seed_addr
+            .as_ref()
+            .and_then(|s| s.parse::<SocketAddr>().ok());
+
+        let init_config_fn = if let Some(seed_socket_addr) = seed_socket_addr {
+            Some(Arc::new(
+                move |_index: usize,
+                      override_config: &mut NodeConfig,
+                      _base_config: &mut NodeConfig| {
+
+                    override_config
+                        .validator_network
+                        .as_mut()
+                        .expect("validator network config must be existed")
+                        .listen_address = seed_socket_addr.into();
+                },
+            ) as Arc<dyn Fn(usize, &mut NodeConfig, &mut NodeConfig) + Send + Sync>)
+        } else {
+            None
+        };
+
         let swarm = self
             .new_swarm_with_version(
                 rng,
@@ -205,7 +230,7 @@ impl Factory for LocalFactory {
                 num_fullnodes,
                 version,
                 framework,
-                None,
+                init_config_fn,
                 None,
                 None,
                 None,

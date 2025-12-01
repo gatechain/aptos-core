@@ -23,6 +23,9 @@ pub struct ForgeConfig {
     /// The initial number of validators to spawn when the test harness creates a swarm
     pub initial_validator_count: NonZeroUsize,
 
+    /// The seed address to use when the test harness creates a swarm
+    pub seed_addr: Option<String>,
+
     /// The initial number of fullnodes to spawn when the test harness creates a swarm
     pub initial_fullnode_count: usize,
 
@@ -106,6 +109,11 @@ impl ForgeConfig {
 
     pub fn with_initial_validator_count(mut self, initial_validator_count: NonZeroUsize) -> Self {
         self.initial_validator_count = initial_validator_count;
+        self
+    }
+
+    pub fn with_seed_addr(mut self, seed_addr: Option<String>) -> Self {
+        self.seed_addr = seed_addr;
         self
     }
 
@@ -342,6 +350,7 @@ impl Default for ForgeConfig {
             admin_tests: vec![],
             network_tests: vec![],
             initial_validator_count: NonZeroUsize::new(1).unwrap(),
+            seed_addr: None,
             initial_fullnode_count: 0,
             initial_version: InitialVersion::Oldest,
             genesis_config: None,

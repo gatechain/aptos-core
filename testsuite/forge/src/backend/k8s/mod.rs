@@ -108,6 +108,7 @@ impl Factory for K8sFactory {
         &self,
         _rng: &mut StdRng,
         num_validators: NonZeroUsize,
+        _seed_addr: Option<String>,
         num_fullnodes: usize,
         init_version: &Version,
         genesis_version: &Version,

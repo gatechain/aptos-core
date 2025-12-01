@@ -8,7 +8,8 @@ use crate::{
 };
 use anyhow::{anyhow, bail, Result};
 use aptos_config::{
-    config::{NetworkConfig, NodeConfig, OverrideNodeConfig, PersistableConfig},
+    config::{NetworkConfig, NodeConfig, OverrideNodeConfig, PeerRole, PersistableConfig},
+    generator::build_seed_for_network,
     keys::ConfigKey,
     network_id::NetworkId,
 };
@@ -132,6 +133,8 @@ impl LocalSwarm {
             SwarmDirectory::Temporary(TempDir::new()?)
         };
 
+        // Clone init_config so we can use it later without moving the original.
+        let init_config_clone = init_config.clone();
         let (root_key, genesis, genesis_waypoint, validators) =
             aptos_genesis::builder::Builder::new(
                 &dir_actual,
@@ -158,12 +161,13 @@ impl LocalSwarm {
                         .max_connection_deadline_secs = 1;
                 }
 
-                if let Some(init_config) = &init_config {
+                if let Some(init_config) = &init_config_clone {
                     (init_config)(index, config, base);
                 }
             })))
             .with_init_genesis_stake(init_genesis_stake)
             .with_init_genesis_config(init_genesis_config)
+            .with_randomize_first_validator_ports(true)
             .build(rng)?;
 
         // Get the initial version to start the nodes with, either the one provided or fallback to
@@ -176,8 +180,21 @@ impl LocalSwarm {
                 .0
                 .clone()
         });
+
         let version = versions.get(&initial_version_actual).unwrap();
 
+        // Safely extract the first validator and its peer id (immutable reference sufficient)
+        let first_validator = validators
+            .get(0)
+            .ok_or_else(|| anyhow!("expected at least one validator after genesis"))?;
+
+        let peer0_id = first_validator
+            .config
+            .override_config()
+            .get_peer_id()
+            .ok_or_else(|| anyhow!("failed to get peer id for first validator"))?;
+
+        // Convert validators to LocalNode first
         let mut validators = validators
             .into_iter()
             .map(|v| {
@@ -191,6 +208,53 @@ impl LocalSwarm {
                 Ok((node.peer_id(), node))
             })
             .collect::<Result<HashMap<_, _>>>()?;
+
+        // Apply init_config to first validator BEFORE generating seeds
+        if let Some(init_config) = &init_config {
+            if let Some(first_node) = validators.get_mut(&peer0_id) {
+                let mut validator_override_config = OverrideNodeConfig::load_config(first_node.config_path())?;
+                let validator_config = validator_override_config.override_config_mut();
+                let mut base_clone = validator_config.clone();
+                (init_config)(0, validator_config, &mut base_clone);
+                validator_override_config.save_config(first_node.config_path())?;
+                // Keep in-memory config consistent with persisted changes so the running node uses new peer address
+                *first_node.config_mut() = validator_override_config.override_config().clone();
+            }
+        }
+
+        // Now generate seeds based on the MODIFIED config
+        let first_node = validators
+            .get(&peer0_id)
+            .ok_or_else(|| anyhow!("first validator not found after conversion"))?;
+        let first_node_config = OverrideNodeConfig::load_config(first_node.config_path())?;
+        
+        let full_node_network = first_node_config
+            .override_config()
+            .full_node_networks
+            .get(1)
+            .cloned()
+            .ok_or_else(|| anyhow!("validator missing full node public network (index 1)"))?;
+
+        let seeds = build_seed_for_network(&full_node_network, PeerRole::Validator);
+        let mut seed_addrs = HashMap::new();
+        let peer0_seeds = seeds
+            .get(&peer0_id)
+            .ok_or_else(|| anyhow!("seeds missing entry for peer0_id: {}", peer0_id))?;
+        seed_addrs.insert(peer0_id, peer0_seeds.addresses.clone());
+
+        let validator_network = first_node_config
+            .override_config()
+            .validator_network
+            .clone()
+            .ok_or_else(|| anyhow!("first validator missing validator_network config"))?;
+
+        let validator_seeds = build_seed_for_network(&validator_network, PeerRole::Validator);
+
+        let mut validator_seed_addrs = HashMap::new();
+        let peer0_validator_seeds = validator_seeds
+            .get(&peer0_id)
+            .ok_or_else(|| anyhow!("validator seeds missing entry for peer0_id: {}", peer0_id))?;
+        validator_seed_addrs.insert(peer0_id, peer0_validator_seeds.addresses.clone());
 
         // After genesis, remove public network from validator and add to public_networks
         let public_networks = validators
@@ -214,6 +278,27 @@ impl LocalSwarm {
                 };
                 validator_config.set_data_dir(validator.base_dir());
                 *validator.config_mut() = validator_config.clone();
+
+                if validator.peer_id() != peer0_id {
+                    validator_override_config
+                        .override_config_mut()
+                        .full_node_networks[0]
+                        .seed_addrs = seed_addrs.clone();
+
+                    validator_override_config
+                        .override_config_mut()
+                        .full_node_networks[0]
+                        .seeds = seeds.clone();
+
+                    if let Some(vnet) = validator_override_config
+                        .override_config_mut()
+                        .validator_network
+                        .as_mut()
+                    {
+                        vnet.seeds = validator_seeds.clone();
+                        vnet.seed_addrs = validator_seed_addrs.clone();
+                    }
+                }
                 // Since the validator's config has changed we need to save it
                 validator_override_config.save_config(validator.config_path())?;
 
